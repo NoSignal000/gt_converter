@@ -17,8 +17,8 @@ def index(request):
     print("Testing2")
     # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
     print("Testing3")
-    print(api_data['data'])
     api_data = response.json()
+    print(api_data['data'])
     context = {
         'receipt_files':api_data["data"]
     }
