@@ -12,7 +12,7 @@ BACKEND_URL = 'http://localhost:8000/media/'
 
 
 def index(request):
-    response = requests.get('http://localhost:8000/api/get-all')
+    response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
     # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
     api_data = response.json()
     context = {
