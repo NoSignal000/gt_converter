@@ -50,7 +50,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     # "https://d7f1-117-207-212-46.ngrok-free.app"
-    "https://2d67-59-91-134-125.ngrok-free.app"
+    "https://file-converter-0ndt.onrender.com",
 ]
 
 
