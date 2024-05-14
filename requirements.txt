@@ -1,3 +1,4 @@
+django-cors-headers==4.3.1
 dj_database_url==2.1.0
 pandas==2.2.2
 Requests==2.31.0
@@ -7,7 +8,6 @@ binaryornot==0.4.4
 constantly==15.1.0
 dj-database-url==2.1.0
 Django==4.2.1
-django-cors-headers==4.3.1
 docopt==0.6.2
 gunicorn==22.0.0
 hpack==4.0.0
