@@ -1,5 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse ,HttpResponse
 from django.shortcuts import render
 from .models import ConvertedFile
 from .signals import convert_file
@@ -28,27 +28,24 @@ def index(request):
     try:
         print("Testing1")
         response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
+        response.raise_for_status()  # Raise an exception for HTTP errors
         print("Testing2")
-        response.raise_for_status()  # Raise an HTTPError for bad responses
         api_data = response.json()
         print("Testing3")
+        print(api_data['data'])
         context = {
-            'receipt_files': api_data.get("data", [])
+            'receipt_files': api_data["data"]
         }
-        print(context['receipt_files'])  # Print the data for debugging
+        return render(request, 'convert.html', context)
     except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-        context = {
-            'receipt_files': []
-        }
-    except ValueError as e:
-        print(f"Error parsing JSON: {e}")
-        context = {
-            'receipt_files': []
-        }
-
-    return render(request, 'convert.html', context)
-
+        print(f"HTTP Request failed: {e}")
+        return HttpResponse("Failed to retrieve data from the API.", status=500)
+    except KeyError as e:
+        print(f"Key error: {e}")
+        return HttpResponse("Unexpected response structure from the API.", status=500)
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return HttpResponse("An unexpected error occurred.", status=500)
 
 
 @csrf_exempt
