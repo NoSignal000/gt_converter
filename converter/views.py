@@ -44,7 +44,6 @@ def index(request):
             return HttpResponse("Failed to retrieve data from the API.", status=500)
 
         print("Testing2")
-        print("Testing3")
         print(api_data.get('data'))  # Use .get to avoid KeyError if 'data' key is missing
 
         context = {
