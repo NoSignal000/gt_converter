@@ -12,17 +12,18 @@ import requests
 
 
 def index(request):
-    print("Testing1")
-    response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-    print("Testing2")
+    # print("Testing1")
     # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-    print("Testing3")
-    api_data = response.json()
-    print(api_data['data'])
-    context = {
-        'receipt_files':api_data["data"]
-    }
-    return render(request,'convert.html',context)
+    # print("Testing2")
+    # # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
+    # print("Testing3")
+    # api_data = response.json()
+    # print(api_data['data'])
+    # context = {
+    #     'receipt_files':api_data["data"]
+    # }
+    # return render(request,'convert.html',context)
+    return render(request,'convert.html')
 
 # def fetch_data():
 #     try:
