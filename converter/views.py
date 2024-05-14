@@ -34,6 +34,7 @@ def index(request):
         # 'receipt_files':api_data["data"]
         'receipt_files':converted_files_data
     }
+    print(context)
     return render(request,'convert.html',context)
     # return render(request,'convert.html')
 
