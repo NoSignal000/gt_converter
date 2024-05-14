@@ -11,18 +11,44 @@ BACKEND_URL = 'http://localhost:8000/media/'
 # BACKEND_URL = 'https://file-converter-0ndt.onrender.com/media/'
 
 
+# def index(request):
+#     print("Testing1")
+#     response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
+#     print("Testing2")
+#     # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
+#     print("Testing3")
+#     api_data = response.json()
+#     print(api_data['data'])
+#     context = {
+#         'receipt_files':api_data["data"]
+#     }
+#     return render(request,'convert.html')
+
 def index(request):
-    # print("Testing1")
-    # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-    # print("Testing2")
-    # # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-    # print("Testing3")
-    # api_data = response.json()
-    # print(api_data['data'])
-    # context = {
-    #     'receipt_files':api_data["data"]
-    # }
-    return render(request,'convert.html')
+    try:
+        print("Testing1")
+        response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
+        print("Testing2")
+        response.raise_for_status()  # Raise an HTTPError for bad responses
+        api_data = response.json()
+        print("Testing3")
+        context = {
+            'receipt_files': api_data.get("data", [])
+        }
+        print(context['receipt_files'])  # Print the data for debugging
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
+        context = {
+            'receipt_files': []
+        }
+    except ValueError as e:
+        print(f"Error parsing JSON: {e}")
+        context = {
+            'receipt_files': []
+        }
+
+    return render(request, 'convert.html', context)
+
 
 
 @csrf_exempt
