@@ -7,58 +7,58 @@ from datetime import datetime
 from datetime import *
 import requests
 
-BACKEND_URL = 'http://localhost:8000/media/'
+# BACKEND_URL = 'http://localhost:8000/media/'
 # BACKEND_URL = 'https://file-converter-0ndt.onrender.com/media/'
 
 
-# def index(request):
-#     print("Testing1")
-#     response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-#     print("Testing2")
-#     # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-#     print("Testing3")
-#     api_data = response.json()
-#     print(api_data['data'])
-#     context = {
-#         'receipt_files':api_data["data"]
-#     }
-#     return render(request,'convert.html')
-
-def fetch_data():
-    try:
-        response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all', timeout=10)
-        response.raise_for_status()  # Raise HTTPError for bad responses
-        return response.json()  # Directly return the JSON data
-    except requests.exceptions.RequestException as e:
-        # Handle the error or log it
-        print(f"RequestException: {e}")
-        return None
-
 def index(request):
-    try:
-        print("Testing1")
-        api_data = fetch_data()
+    print("Testing1")
+    response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
+    print("Testing2")
+    # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
+    print("Testing3")
+    api_data = response.json()
+    print(api_data['data'])
+    context = {
+        'receipt_files':api_data["data"]
+    }
+    return render(request,'convert.html',context)
+
+# def fetch_data():
+#     try:
+#         response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all', timeout=10)
+#         response.raise_for_status()  # Raise HTTPError for bad responses
+#         return response.json()  # Directly return the JSON data
+#     except requests.exceptions.RequestException as e:
+#         # Handle the error or log it
+#         print(f"RequestException: {e}")
+#         return None
+
+# def index(request):
+#     try:
+#         print("Testing1")
+#         api_data = fetch_data()
         
-        if api_data is None:
-            print("No data received from the API.")
-            return HttpResponse("Failed to retrieve data from the API.", status=500)
+#         if api_data is None:
+#             print("No data received from the API.")
+#             return HttpResponse("Failed to retrieve data from the API.", status=500)
 
-        print("Testing2")
-        print(api_data.get('data'))  # Use .get to avoid KeyError if 'data' key is missing
+#         print("Testing2")
+#         print(api_data.get('data'))  # Use .get to avoid KeyError if 'data' key is missing
 
-        context = {
-            'receipt_files': api_data.get("data", [])  # Provide a default empty list if 'data' key is missing
-        }
-        return render(request, 'convert.html', context)
-    except requests.exceptions.RequestException as e:
-        print(f"HTTP Request failed: {e}")
-        return HttpResponse("Failed to retrieve data from the API.", status=500)
-    except KeyError as e:
-        print(f"Key error: {e}")
-        return HttpResponse("Unexpected response structure from the API.", status=500)
-    except Exception as e:
-        print(f"An unexpected error occurred: {e}")
-        return HttpResponse("An unexpected error occurred.", status=500)
+#         context = {
+#             'receipt_files': api_data.get("data", [])  # Provide a default empty list if 'data' key is missing
+#         }
+#         return render(request, 'convert.html', context)
+#     except requests.exceptions.RequestException as e:
+#         print(f"HTTP Request failed: {e}")
+#         return HttpResponse("Failed to retrieve data from the API.", status=500)
+#     except KeyError as e:
+#         print(f"Key error: {e}")
+#         return HttpResponse("Unexpected response structure from the API.", status=500)
+#     except Exception as e:
+#         print(f"An unexpected error occurred: {e}")
+#         return HttpResponse("An unexpected error occurred.", status=500)
 
 
 
