@@ -13,14 +13,26 @@ import requests
 
 def index(request):
     # print("Testing1")
-    response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-    print("Testing2")
-    #response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-    # print("Testing3")
-    api_data = response.json()
-    # print(api_data['data'])
+    # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
+    converted_files = ConvertedFile.objects.all().order_by('-timestamp')
+    converted_files_data = []
+    for converted_file in converted_files:
+        timestamp_obj = timestamp = datetime.fromisoformat(converted_file.pdf_file.timestamp.isoformat()[:-6])
+        formatted_time = timestamp_obj.strftime("%Y-%m-%d %H:%M:%S")
+        converted = {
+            'pdf_file': {
+                'id': converted_file.pdf_file.id,
+                'file': converted_file.pdf_file.file.url,
+                'timestamp': formatted_time,
+                    },
+                'csv_file': converted_file.csv_file.url,
+                'timestamp': converted_file.timestamp.isoformat(),
+                }
+        converted_files_data.append(converted)
+    # api_data = response.json()
     context = {
-        'receipt_files':api_data["data"]
+        # 'receipt_files':api_data["data"]
+        'receipt_files':converted_files_data
     }
     return render(request,'convert.html',context)
     # return render(request,'convert.html')
