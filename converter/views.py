@@ -24,17 +24,31 @@ BACKEND_URL = 'http://localhost:8000/media/'
 #     }
 #     return render(request,'convert.html')
 
+def fetch_data():
+    try:
+        response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all', timeout=10)
+        response.raise_for_status()  # Raise HTTPError for bad responses
+        return response.json()  # Directly return the JSON data
+    except requests.exceptions.RequestException as e:
+        # Handle the error or log it
+        print(f"RequestException: {e}")
+        return None
+
 def index(request):
     try:
         print("Testing1")
-        response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-        response.raise_for_status()  # Raise an exception for HTTP errors
+        api_data = fetch_data()
+        
+        if api_data is None:
+            print("No data received from the API.")
+            return HttpResponse("Failed to retrieve data from the API.", status=500)
+
         print("Testing2")
-        api_data = response.json()
         print("Testing3")
-        print(api_data['data'])
+        print(api_data.get('data'))  # Use .get to avoid KeyError if 'data' key is missing
+
         context = {
-            'receipt_files': api_data["data"]
+            'receipt_files': api_data.get("data", [])  # Provide a default empty list if 'data' key is missing
         }
         return render(request, 'convert.html', context)
     except requests.exceptions.RequestException as e:
@@ -46,6 +60,9 @@ def index(request):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return HttpResponse("An unexpected error occurred.", status=500)
+
+
+
 
 
 @csrf_exempt
