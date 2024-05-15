@@ -33,18 +33,18 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>PDF Filename</th>
+                                
                                 <th>CSV Download</th>
-                                <th>Time Stamp</th>
+                                
                             </tr>
                         </thead>
                         
                         <tbody>
                             {% for receipt_file in receipt_files %}
                             <tr>
-                                <td>{{ receipt_file.pdf_file.file }}<a href="{{ receipt_file.pdf_file.file }}">PDF File</a></td>
+                                
                                 <td>{{ receipt_file.csv_file }}<a href="{{ receipt_file.csv_file }}">Download</a></td>
-                                <td>{{ receipt_file.pdf_file.timestamp }} </td>
+                                
                             </tr>
                             {% endfor %}
                         </tbody>
