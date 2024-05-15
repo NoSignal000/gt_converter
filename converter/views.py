@@ -5,16 +5,13 @@ from .models import ConvertedFile
 from .signals import convert_file
 from datetime import datetime
 from datetime import *
-import requests
-
-# BACKEND_URL = 'http://localhost:8000/media/'
-# BACKEND_URL = 'https://file-converter-0ndt.onrender.com/media/'
+import os
 
 
 def index(request):
     # print("Testing1")
     # response = requests.get('https://file-converter-0ndt.onrender.com/api/get-all')
-    converted_files = ConvertedFile.objects.all().order_by('-timestamp')
+    converted_files = ConvertedFile.objects.all().order_by('-timestamp')[:10]
     converted_files_data = []
     for converted_file in converted_files:
         timestamp_obj = timestamp = datetime.fromisoformat(converted_file.pdf_file.timestamp.isoformat()[:-6])
@@ -25,6 +22,7 @@ def index(request):
                 'file': converted_file.pdf_file.file.url,
                 'timestamp': formatted_time,
                     },
+                'name':os.path.basename(converted_file.csv_file.url),
                 'csv_file': converted_file.csv_file.url,
                 'timestamp': converted_file.timestamp.isoformat(),
                 }
@@ -34,7 +32,6 @@ def index(request):
         # 'receipt_files':api_data["data"]
         'receipt_files':converted_files_data
     }
-    print(context)
     return render(request,'convert.html',context)
     # return render(request,'convert.html')
 

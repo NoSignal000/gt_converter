@@ -33,18 +33,14 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                
                                 <th>CSV Download</th>
-                                
                             </tr>
                         </thead>
                         
                         <tbody>
                             {% for receipt_file in receipt_files %}
                             <tr>
-                                
-                                <td>{{ receipt_file.csv_file }}<a href="{{ receipt_file.csv_file }}">Download</a></td>
-                                
+                                <td>{{ receipt_file.name }}<a href="{{ receipt_file.csv_file }}">Download</a></td>
                             </tr>
                             {% endfor %}
                         </tbody>
