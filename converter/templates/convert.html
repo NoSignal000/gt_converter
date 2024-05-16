@@ -2,18 +2,19 @@
 
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                 <!-- Upload Receipt File -->
-                <div class="container mt-5">
-                    <div class="row">
-                        <div class="col-md-6 offset-md-3">
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- Upload Receipt File -->
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <center>
                             <h2 class="mb-4">Upload Files</h2>
-
-                            <form id="uploadForm" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <input type="file" class="form-control" id="fileInput" name="pdf_file" accept="image/*,application/pdf" required>
+                        </center>
+                                <form id="uploadForm" method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <input type="file" class="form-control" id="fileInput" name="pdf_file" accept="image/*,application/pdf" required>
                                 </div>
                                 <div class="form-group">
                                     <canvas id="previewCanvas" style="max-width: 100%;"></canvas>
@@ -27,7 +28,7 @@
                         </div>
                     </div>
                 </div>
-
+                
                 <!-- TABLE SECTION -->
                 <div class="table-responsive">
                     <table class="table table-bordered">
@@ -40,7 +41,12 @@
                         <tbody>
                             {% for receipt_file in receipt_files %}
                             <tr>
-                                <td>{{ receipt_file.name }}<a href="{{ receipt_file.csv_file }}">Download</a></td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-6">{{ receipt_file.name }}</div>
+                                        <div class="col-md-6 text-right"><a href="{{ receipt_file.csv_file }}" class="btn btn-primary">Download</a></div>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
