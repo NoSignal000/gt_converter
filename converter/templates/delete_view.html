@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- Upload Receipt File -->
+            <div class="container mt-5">
+                <!-- TABLE SECTION -->
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>CSV Download</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            {% for receipt_file in receipt_files %}
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-md-6">{{ receipt_file.name }}</div>
+                                        <div class="col-md-6 text-right"><a href="/api/delete/?id={{receipt_file.pdf_file.id}}" class="btn btn-danger">Delete</a></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

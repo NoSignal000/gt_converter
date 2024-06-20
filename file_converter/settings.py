@@ -48,8 +48,8 @@ ROOT_URLCONF = "file_converter.urls"
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    # "http://localhost:8000",
-    "https://file-converter-0ndt.onrender.com",
+    "http://localhost:8000",
+    # "https://file-converter-0ndt.onrender.com",
 ]
 
 
@@ -76,16 +76,16 @@ WSGI_APPLICATION = "file_converter.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
 DATABASES = {
-    "default":  dj_database_url.parse(os.environ.get("DATABASE_URL")) 
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
+
+# DATABASES = {
+#     "default":  dj_database_url.parse(os.environ.get("DATABASE_URL")) 
+# }
 
 # DATABASES = {
 #     'default': {

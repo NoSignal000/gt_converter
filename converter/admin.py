@@ -1,11 +1,5 @@
 from django.contrib import admin
-from .models import ReceiptFile,PDFFile,ConvertedFile
-
-
-
-@admin.register(ReceiptFile)
-class ReceiptFileAdmin(admin.ModelAdmin):
-    list_display = ("id", 'file', 'uploaded_at', 'converted_csv','status')
+from .models import PDFFile,ConvertedFile
 
 @admin.register(PDFFile)
 class ReceiptFileAdmin(admin.ModelAdmin):

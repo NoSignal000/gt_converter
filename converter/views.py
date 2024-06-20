@@ -1,6 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse ,HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import ConvertedFile
 from .signals import convert_file
 from datetime import datetime
@@ -76,4 +76,39 @@ def upload_file(request):
         topMargin = request.POST.get("y1")
 
         return convert_file(pdf_file,int(leftMargin),int(bottomMargin),int(rightMargin),int(topMargin))
-    
+
+
+@csrf_exempt
+def delete_view(request):
+    converted_files = ConvertedFile.objects.all().order_by('-timestamp')
+    converted_files_data = []
+    for converted_file in converted_files:
+        timestamp_obj = timestamp = datetime.fromisoformat(converted_file.pdf_file.timestamp.isoformat()[:-6])
+        formatted_time = timestamp_obj.strftime("%Y-%m-%d %H:%M:%S")
+        converted = {
+            'pdf_file': {
+                'id': converted_file.pdf_file.id,
+                'file': converted_file.pdf_file.file.url,
+                'timestamp': formatted_time,
+                    },
+                'name':os.path.basename(converted_file.csv_file.url),
+                'csv_file': converted_file.csv_file.url,
+                'timestamp': converted_file.timestamp.isoformat(),
+                }
+        converted_files_data.append(converted)
+    context = {
+        'receipt_files':converted_files_data
+    }
+    return render(request,'delete_view.html',context)
+
+@csrf_exempt
+def delete(request):
+    id = request.GET.get('id')
+    print(id)
+    print(type(id))
+    data = ConvertedFile.objects.filter(id=id)
+    data.delete()    
+
+
+    print(data)
+    return redirect("/api/rm")
